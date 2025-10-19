@@ -1,6 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 
-app.listen(3000, (req, res) => {
-    console.log('Server is running');
+const PORT = process.env.PORT || 3000;
+
+app.listen(typeof PORT === 'string' ? parseInt(PORT) : PORT, (req, res) => {
+    console.log(`Server is running on ${PORT}`);
 });
