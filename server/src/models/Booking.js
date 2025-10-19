@@ -38,3 +38,5 @@ const Booking = sequelize.define("Booking", {
 
 Event.hasMany(Booking, { foreignKey: "event_id" });
 Booking.belongsTo(Event, { foreignKey: "event_id" });
+
+module.exports = Booking;

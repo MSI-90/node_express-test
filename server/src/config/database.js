@@ -1,9 +1,6 @@
-require('dotenv').config();
 const { Sequelize } = require('sequelize');
 
-const pr = process.env;
-
-const sequelize = new Sequelize(pr.DB_NAME, pr.DB_USER, pr.DB_PASSWORD, {
+const sequelize = new Sequelize('booking', 'admin', 'admin_password', {
     dialect: 'postgres',
     host: 'localhost',
     port: 5440,
