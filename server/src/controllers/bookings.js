@@ -1,6 +1,4 @@
 const {createBooking} = require('../services/bookings');
-const {queryMode} = require("pg/lib/native/query");
-const router = require("../routers/bookings");
 
 const reserve = async(req, res, next) => {
     try{
@@ -13,15 +11,29 @@ const reserve = async(req, res, next) => {
             });
         }
 
-        // Create new booking
-        const addBooking = await createBooking(event_id, user_id);
-        if (addBooking){
-            res.status(201).json({
-                success: true,
-                message: 'Booking created successfully',
-                booking: addBooking
+        if (event_id <= 0){
+            return res.status(422).json({
+                error: 'Unprocessable Entity',
+                received: req.body
             });
         }
+
+        if (isNaN(event_id) || typeof user_id !== 'string'){
+            return res.status(422).json({
+                error: 'Unprocessable Entity',
+                received: req.body
+            });
+        }
+
+        // Create new booking
+        const addBooking = await createBooking(event_id, user_id);
+
+        res.status(201).json({
+            success: true,
+            message: 'Booking created successfully',
+            booking: addBooking
+        });
+
     } catch (err) {
         next(err);
     }
